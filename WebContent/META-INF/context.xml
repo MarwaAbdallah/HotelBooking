@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Context>
+    <Resource name="jdbc/HotelBookingDB"
+        auth="Container"
+        type="javax.sql.DataSource"
+        username="postgres"
+        password="password"
+        driverClassName="org.postgresql.Driver"
+        url="jdbc:postgresql://192.168.0.200/HotelBookingDB"
+        maxActive="15"
+        maxIdle="3">
+    </Resource>
+
+	<Realm className="org.apache.catalina.realm.DataSourceRealm" debug="99"
+	   dataSourceName="jdbc/HotelBookingDB" localDataSource="true"
+       userTable="users" userNameCol="email" userCredCol="upassword"
+       userRoleTable="users_roles" roleNameCol="role_name">
+	</Realm>
+</Context>

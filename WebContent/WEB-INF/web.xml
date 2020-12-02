@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+
+	<listener>
+		<listener-class>db.DBManager</listener-class>
+	</listener>
+	<welcome-file-list>
+		<welcome-file>HotelManagementSystem</welcome-file>
+
+	</welcome-file-list>
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
+
+	
+	<servlet>
+		<servlet-name>HotelControllerServlet</servlet-name>
+		<servlet-class>controller.HotelControllerServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>TestServlet</servlet-name>
+		<servlet-class>Test.TestServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>InitializeServlet</servlet-name>
+		<servlet-class>controller.InitializeServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ReservationControllerServlet</servlet-name>
+		<servlet-class>controller.ReservationControllerServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>controller.LoginServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AdminServlet</servlet-name>
+		<servlet-class>controller.AdminServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AgentServlet</servlet-name>
+		<servlet-class>controller.AgentServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CustomerServlet</servlet-name>
+		<servlet-class>controller.CustomerServlet</servlet-class>
+	</servlet>
+	
+
+	<servlet>
+		<servlet-name>RegisterServlet</servlet-name>
+		<servlet-class>controller.RegisterServlet</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>HotelControllerServlet</servlet-name>
+		<url-pattern>/locations</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>TestServlet</servlet-name>
+		<url-pattern>/testServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>InitializeServlet</servlet-name>
+		<url-pattern>/HotelManagementSystem</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ReservationControllerServlet</servlet-name>
+		<url-pattern>/Reserve</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AdminServlet</servlet-name>
+		<url-pattern>/admin</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AgentServlet</servlet-name>
+		<url-pattern>/agent</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>CustomerServlet</servlet-name>
+		<url-pattern>/customer</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>RegisterServlet</servlet-name>
+		<url-pattern>/Register</url-pattern>
+	</servlet-mapping>
+
+
+	<security-role>
+		<description>Global Admin</description>
+		<role-name>admin</role-name>
+	</security-role>
+	<security-role>
+		<description>App user</description>
+		<role-name>user</role-name>
+	</security-role>
+	<security-role>
+		<description>Hotel Manager</description>
+		<role-name>hoteladmin</role-name>
+	</security-role>
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>jdbcRealm</realm-name>
+		<form-login-config>
+			<form-login-page>/signin.jsp</form-login-page>
+			<form-error-page>/signin.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+  <!-- User -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>User pages</web-resource-name>
+			<description />
+			<url-pattern>/myaccount.jsp</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>user</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+  <!-- Admin -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Admin pages</web-resource-name>
+			<description />
+			<url-pattern>/admindd/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+  <!-- Hotel Manager -->
+  <!-- Admin -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Hotel Admin pages</web-resource-name>
+			<description />
+			<url-pattern>/hotel*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>hoteladmin</role-name>
+		</auth-constraint>
+	</security-constraint>
+</web-app>
