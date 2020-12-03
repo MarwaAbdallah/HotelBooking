@@ -6,7 +6,6 @@
 	</listener>
 	<welcome-file-list>
 		<welcome-file>HotelManagementSystem</welcome-file>
-
 	</welcome-file-list>
 	
 	<session-config>
@@ -114,8 +113,8 @@
 		<auth-method>FORM</auth-method>
 		<realm-name>jdbcRealm</realm-name>
 		<form-login-config>
-			<form-login-page>/signin.jsp</form-login-page>
-			<form-error-page>/signin.jsp</form-error-page>
+			<form-login-page>/WEB-INF/views/signin.jsp</form-login-page>
+			<form-error-page>/WEB-INF/views/signin.jsp</form-error-page>
 		</form-login-config>
 	</login-config>
   <!-- User -->

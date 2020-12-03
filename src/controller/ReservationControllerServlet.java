@@ -12,9 +12,9 @@ import java.net.http.HttpRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
-
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -168,7 +168,7 @@ public class ReservationControllerServlet extends HttpServlet{
 	
 	private void doReserve(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		String url = "confirmation.jsp";
+		String url = "/WEB-INF/views/confirmation.jsp";
 		String userEmail = request.getRemoteUser();
 		int hotelId = Integer.parseInt(request.getParameter("hotelId"));
 		int roomId = Integer.parseInt(request.getParameter("roomId"));
@@ -182,9 +182,9 @@ public class ReservationControllerServlet extends HttpServlet{
 			User user = UserDaoUtil.getUserfromPrincipal(userEmail);
 			Room room = RoomDaoUtil.getRoom(hotelId, roomId);
 			Hotel hotel = HotelDaoUtil.getHotel(hotelId);
-			
-			ReservationDaoUtil.createReservation(user.getId(), hotelId, roomId,checkIn,checkOut);
 			Reservation reserv = new Reservation(checkIn,checkOut,user,hotel,room);
+			ReservationDaoUtil.createReservation(reserv);
+			
 			postReservation(request, response,hotelId, reserv);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -206,30 +206,47 @@ public class ReservationControllerServlet extends HttpServlet{
 	}
 	 static void getCheckoutPage(HttpServletRequest request, HttpServletResponse response) {
 		String url = "";
-		if (request.getRemoteUser()!= null) {
-			url="checkout.jsp";
-		} else {
-			url="checkoutsignin.jsp";
+		//if (request.getRemoteUser()!= null) {
+			//url="/WEB-INF/views/checkout.jsp";
+		//} else {
+			url="/WEB-INF/views/checkoutsignin.jsp";
 			String hotelId = request.getParameter("hotelId");
 			String  roomId = request.getParameter("roomId");
 			String hotelName = request.getParameter("hotelName");
 			String roomNo = request.getParameter("roomBedNo");
 			String  roomPrice = request.getParameter("roomPrice");
+			
 			hotelName = hotelName.replaceAll("\\s", "");;
 			System.out.println("hotelName = "+hotelName);
-			Cookie[] choiceCookieb = new Cookie[6];
-				choiceCookieb[0] = new Cookie("roomId", roomId);
-				choiceCookieb[1] = new Cookie("roomPrice", roomPrice);
-				choiceCookieb[2] = new Cookie("roomBedsNo", roomNo);
-				choiceCookieb[3] = new Cookie("hotelId", hotelId);
-				choiceCookieb[4] = new Cookie("hotelName", hotelName);
+			
+			Cookie[] cookies = request.getCookies();
+//			if (cookies != null) {
+				Map<String, String> newCook = new HashMap<>();
+				newCook.put("roomId", roomId);
+				newCook.put("roomPrice", roomPrice);
+				newCook.put("roomBedsNo", roomNo);
+				newCook.put("hotelId", hotelId);
+				newCook.put("hotelName", hotelName);
 				
-			response.addCookie(choiceCookieb[0]);
-			response.addCookie(choiceCookieb[1]);
-			response.addCookie(choiceCookieb[2]);
-			response.addCookie(choiceCookieb[3]);
-			response.addCookie(choiceCookieb[4]);
-		}
+				for (String name : newCook.keySet()) {
+					System.out.println("in newcook : Name " + name + ", value"
+				+ newCook.get(name));
+					
+					for (int i = 1; i < cookies.length; i++) {
+						
+						String cn = cookies[i].getName();
+						System.out.println("Cookie :" + cn + ", :" + cookies[i].getValue());
+						if (newCook.containsKey(cn)) {
+							String val = newCook.get(cn);
+							cookies[i].setValue(val);
+
+						} else {
+							Cookie c = new Cookie(name, newCook.get(name));
+							response.addCookie(c);
+							
+						}
+					}
+				}
 		
 		
 		

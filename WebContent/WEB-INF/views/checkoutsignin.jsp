@@ -85,43 +85,70 @@
      </div>
       </div>
 
-<div class="container">
-<h4>You must Sign In or Create an Account to continue </h4>
-<div class="col-md-13 order-md-1">
-<hr class="mb-4">
+	<div class="container">
+		<div class="col-md-13 order-md-1">
+			<c:if test="${empty usrPrincipal}">
+				<h4>You must Sign In or Create an Account to continue</h4>
+				<div class="col-md-13 order-md-1">
+					<hr class="mb-4">
 
-<div></div>
-		<div class="row">
-		<hr class="mb-4">
-		
-           <div class="col-md-6 mb-3">
-		<form name="requestloginPageCheckout" action="LoginServlet">
-		<input type="hidden" id="returnCheckout" name="returnCheckout" value="returnCheckout">
-		<input type="hidden" name="fromb" value="${pageContext.request.requestURI}">
-		<h4 class="mb-3">Have an Account ?</h4>
-		 <input type="hidden" name="action" value="REQUEST_SIGNIN">
-		 <button class="btn btn-primary btn-lg " type="submit">Sign In</button>
-		</form>
-		  </div>
+					<div></div>
+					<div class="row">
+						<hr class="mb-4">
 
-		  <div class="col-md-6 mb-3">
-		  <form  name="requestSignupPage" action="RegisterServlet">
-		<h4 class="mb-3">Want to create an Account ?</h4>
-		 <input type="hidden" name="action" value="REQUEST_SIGNUP">
-		 <input type="hidden" name="fromb" value="${pageContext.request.requestURI}">
-		 		<input type="hidden" id="returnCheckout" name="returnCheckout" value="returnCheckout">
-		 
-		 <button class="btn btn-primary btn-lg" type="submit">Register</button>
-		</form>
-              </div>
-              
+						<div class="col-md-6 mb-3">
+							<form name="requestloginPageCheckout" action="LoginServlet">
+								<input type="hidden" id="returnCheckout" name="returnCheckout"
+									value="returnCheckout"> <input type="hidden"
+									name="fromb" value="${pageContext.request.requestURI}">
+								<h4 class="mb-3">Have an Account ?</h4>
+								<input type="hidden" name="action" value="REQUEST_SIGNIN">
+								<button class="btn btn-primary btn-lg " type="submit">Sign
+									In</button>
+							</form>
+						</div>
+
+						<div class="col-md-6 mb-3">
+							<form name="requestSignupPage" action="RegisterServlet">
+								<h4 class="mb-3">Want to create an Account ?</h4>
+								<input type="hidden" name="action" value="REQUEST_SIGNUP">
+								<input type="hidden" name="fromb"
+									value="${pageContext.request.requestURI}"> <input
+									type="hidden" id="returnCheckout" name="returnCheckout"
+									value="returnCheckout">
+
+								<button class="btn btn-primary btn-lg" type="submit">Register</button>
+							</form>
+						</div>
+
+					</div>
+					<hr class="mb-4">
+
+
+				</div>
+			</c:if>
+			<c:if test="${not empty usrPrincipal}">
+				<hr class="mb-4">
+
+				<form class="needs-validation" novalidate="">
+					<c:url var="BookLink" value="ReservationControllerServlet">
+						<c:param name="command" value="RESERVE_ROOM_CHOSEN" />
+						<c:param name="hotelName" value='${cookie["hotelName"].value}' />
+						<c:param name="hotelId" value='${cookie["hotelId"].value}' />
+						<c:param name="roomId" value='${cookie["roomId"].value}' />
+						<c:param name="roomPrice" value='${cookie["roomPrice"].value}' />
+						<c:param name="checkIn" value='${cookie["checkIn"].value}' />
+						<c:param name="checkOut" value='${cookie["checkOut"].value}' />
+
+					</c:url>
+					<div class="mb-3"></div>
+					<a href="${BookLink}" class="btn btn-primary btn-lg active"
+						role="button">Book Room</a>
+
+
+				</form>
+			</c:if>
 		</div>
-		<hr class="mb-4">
-	
-
-		    </div>
-		    </div>
-
-
+	</div>
 </body>
 </html>

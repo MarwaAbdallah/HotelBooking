@@ -99,7 +99,7 @@ public class HotelControllerServlet extends HttpServlet {
 
 	private void getListRoomsAvailableinHotel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
 		// TODO Auto-generated method stub
-		String url="/reserve.jsp";
+		String url="/WEB-INF/views/reserve.jsp";
 		int hotelId = Integer.parseInt(request.getParameter("hotelId"));
 		List<Room> rooms = RoomDaoUtil.getAvailableRoomsForHotel(hotelId);
 		Hotel hotel = HotelDaoUtil.getHotel(hotelId);
@@ -147,21 +147,55 @@ public class HotelControllerServlet extends HttpServlet {
 			HotelInfo hotelInfos = new HotelInfo(count,minPrice);
 			map.put(h, hotelInfos);
 		}
-		Cookie[] choiceCookie = new Cookie[4];
-		choiceCookie[0] = new Cookie("city",city);
-		choiceCookie[1] = new Cookie("country",country);
-		choiceCookie[2] = new Cookie("checkIn",checkIn);
-		choiceCookie[3] = new Cookie("checkOut",checkOut);
-		response.addCookie(choiceCookie[0]);
-		response.addCookie(choiceCookie[1]);
-		response.addCookie(choiceCookie[2]);
-		response.addCookie(choiceCookie[3]);
 
+		Map<String, String> newCook = new HashMap<>();
+		newCook.put("city",city);
+		newCook.put("country",country);
+		newCook.put("checkIn",checkIn);
+		newCook.put("checkOut",checkOut);
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			System.out.println("Cookie not null");
+		    for (int i = 1; i < cookies.length; i++) {
+		    	String name = cookies[i].getName();
+		    	System.out.println("Cookie :"+name+", :"+cookies[i].getValue());
+		    	if (newCook.containsKey(name)) {
+		    		String val = newCook.get(name);
+		    		cookies[i].setValue(val);
+		    		response.addCookie(cookies[i]);
+		    	} else {
+		    		
+		    	}
+		    }
+	    } else {
+	    	System.out.println("Cookie not null");
+			Cookie[] choiceCookie = new Cookie[4];
+	
+			choiceCookie[0] = new Cookie("city",city);
+			choiceCookie[1] = new Cookie("country",country);
+			choiceCookie[2] = new Cookie("checkIn",checkIn);
+			choiceCookie[3] = new Cookie("checkOut",checkOut);
+	
+			response.addCookie(choiceCookie[0]);
+			response.addCookie(choiceCookie[1]);
+			response.addCookie(choiceCookie[2]);
+			response.addCookie(choiceCookie[3]);
+	    }
 		request.setAttribute("HOTELMAP",map);
-		String url="/choosestaying.jsp";
+		String url="/WEB-INF/views/choosestaying.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request,response);
 		
+	}
+	private void erasePreferenceCookie(HttpServletRequest req, HttpServletResponse resp) {
+	    Cookie[] cookies = req.getCookies();
+	    if (cookies != null)
+	        for (Cookie cookie : cookies) {
+	            cookie.setValue("");
+	            cookie.setPath("/");
+	            cookie.setMaxAge(0);
+	            resp.addCookie(cookie);
+	        }
 	}
 
 

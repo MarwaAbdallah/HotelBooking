@@ -1,5 +1,5 @@
 package dao;
-
+import model.Room;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ import db.DBManager;
 import model.Hotel;
 import model.Location;
 import model.Reservation;
-import model.Room;
+
 import model.User;
 
 public class ReservationDao {
@@ -26,33 +26,38 @@ public class ReservationDao {
 		this.datasource = datasource;
 	}
 	
-	public void createReservation(int userId, int hotelId, int roomId, LocalDate checkIn,LocalDate checkOut) 
+	public void createReservation(Reservation r) 
 			throws Exception {
 		Connection myCon = null;
 		PreparedStatement myStmt=null;
-		
+		PreparedStatement myStmtb=null;
 		try {
 			// get DB connection
 			myCon=datasource.getConnection();
 			//create SQL for insert
 			String sql = "INSERT INTO reservations" + 
 			"(user_id, checkin, checkout, room_id, hotel_id)" 
-						+ " VALUES(?,?,?,?,?)";
+						+ " VALUES(?,?,?,?,?,?)";
 			
 			myStmt=myCon.prepareStatement(sql);
 			// set the param values for the USER (the "?")
-			myStmt.setInt(1,userId);
-			myStmt.setObject(2, checkIn);
-			myStmt.setObject(3, checkOut);
-			myStmt.setInt(4,roomId);
-			myStmt.setInt(5,hotelId);
-
-			//myStmt.setString(1, user.getUserName());
-
-			myStmt.execute();	
+			myStmt.setInt(1,r.getCustomer().getId());
+			myStmt.setObject(2, r.getFromStayDate());
+			myStmt.setObject(3, r.getToStayDate());
+			myStmt.setInt(4,r.getBedding().getId());
+			myStmt.setInt(5, r.getHotel().getId());
+			myStmt.setDouble(6,r.getPrice());	
+			myStmt.execute();
+			String sqlb = "update rooms"
+					+ " set is_booked = 'true'"
+					+ "where room_id = ?";
+					
+			myStmtb=myCon.prepareStatement(sql);
+			myStmtb.setInt(1, r.getBedding().getHotelId());
+			myStmtb.execute();
 		} 
 		finally {
-				DBManager.close(myCon, myStmt, null);	
+				DBManager.closeb(myCon, myStmt, myStmtb,null);	
 		}
 		
 	}
@@ -124,6 +129,7 @@ public class ReservationDao {
 				String country = myRs.getString("country_id");
 				int numStars = myRs.getInt("numstars");
 				int roomId = myRs.getInt("room_id");
+				double price = myRs.getDouble("price");
 				Room room = new Room(roomId,hotelId);
 				Hotel hotel = new Hotel(hotelId, hotelName, city, 
 						country, numStars);

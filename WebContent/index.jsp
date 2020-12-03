@@ -21,7 +21,7 @@
   
   </head>
   <body>
-<%@ include file="header.jsp" %>
+<%@ include file="WEB-INF/views/header.jsp" %>
 <div class="card mb-3">
 
   <div class="card-body">

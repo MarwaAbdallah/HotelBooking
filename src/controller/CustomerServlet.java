@@ -86,7 +86,7 @@ public class CustomerServlet extends HttpServlet {
 		List<Reservation> reservations = new ArrayList<>();
 		String email = request.getRemoteUser();
 		System.out.println("userPrincipal is :"+email);
-		String url = "myaccount.jsp";
+		String url = "/WEB-INF/views/myaccount.jsp";
 		if (email != null) {
 			try {
 				User user = UserDaoUtil.getUserfromPrincipal(email);

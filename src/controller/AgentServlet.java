@@ -80,7 +80,7 @@ public class AgentServlet extends HttpServlet {
 		List<Reservation> reservations = new ArrayList<>();
 		String email = request.getRemoteUser();
 		System.out.println("userPrincipal is :"+email);
-		String url = "agenthome.jsp";
+		String url = "/WEB-INF/views/agenthome.jsp";
 		if (email != null) {
 			try {
 				reservations = ReservationDaoUtil.

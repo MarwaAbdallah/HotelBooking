@@ -39,7 +39,7 @@
 
         <div class="mb-3">
           <label for="address">Password</label>
-          <input type="text" class="form-control" id="password" name="password" placeholder="1234 Main St" required>
+          <input type="password" class="form-control" id="password" name="password" placeholder="1234 Main St" required>
           <div class="invalid-feedback">
             Please enter your shipping address.
           </div>

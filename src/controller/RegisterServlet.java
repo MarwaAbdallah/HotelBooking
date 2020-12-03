@@ -74,9 +74,9 @@ public class RegisterServlet extends HttpServlet {
 			if (!UserDaoUtil.isUserPresentInDb(email)) {
 				User user = new User(email,password,"Customer");
 				UserDaoUtil.addUser(user);
-				url ="myaccount.jsp";
+				url ="/WEB-INF/views/myaccount.jsp";
 			} else {
-				url = "signup.jsp";
+				url = "/WEB-INF/views/signup.jsp";
 				String message = "Email "+email+" is already used,"
 						+ "Please use another one";
 				request.setAttribute("message", message);
@@ -91,7 +91,7 @@ public class RegisterServlet extends HttpServlet {
 
 	private void getRegisterPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String url="signup.jsp";
+		String url="/WEB-INF/views/signup.jsp";
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
 		requestDispatcher.forward(request, response);
 	}

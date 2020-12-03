@@ -35,10 +35,10 @@ public class Reservation implements Serializable {
 			Hotel hotel, Room room) {
 		this.setFromStayDate(fromStayDate);
 		this.setToStayDate(toStayDate);
-
 		this.customer = customer;
 		this.hotel = hotel;
 		this.setBedding(room);
+		this.setPrice(room.getPrice());
 	}
 
 

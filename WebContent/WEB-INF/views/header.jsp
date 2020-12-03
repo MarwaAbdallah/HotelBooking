@@ -50,20 +50,26 @@
   </head>
   <body>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		<span class="navbar-brand position-absolute">HotelBooker</span>
 		<c:url var="SignIn" value="LoginServlet">
-			<c:param name="action" value="REQUEST_SIGNIN" />
-		</c:url>
-		<c:url var="SignOut" value="LoginServlet">
-			<c:param name="action" value="SIGNOUT" />
-		</c:url>
-		<c:url var="SignUp" value="RegisterServlet">
-			<c:param name="action" value="REQUEST_SIGNUP" />
-		</c:url>
+				<c:param name="action" value="REQUEST_SIGNIN" />
+			</c:url>
+			<c:url var="SignOut" value="LoginServlet">
+				<c:param name="action" value="SIGNOUT" />
+			</c:url>
+			<c:url var="SignUp" value="RegisterServlet">
+				<c:param name="action" value="REQUEST_SIGNUP" />
+			</c:url>
+			<c:url var="Home" value="HotelManagementSystem">
+				
+			</c:url>
 
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href="${Home}">HotelBooker</a></li>
+			</ul>
+		
 		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
 			<c:if test="${not empty usrPrincipal}">
-			<
+			
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><p></p></li>
 				<li class="nav-item"><a class="nav-link" href="${SignOut}">Sign

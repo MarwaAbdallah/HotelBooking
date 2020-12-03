@@ -149,7 +149,7 @@ public class AdminServlet extends HttpServlet {
 
 	private void getAddUser(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		String url = "adminadduser.jsp";
+		String url = "/WEB-INF/views/adminadduser.jsp";
 		System.out.println("In get ADD User");
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
 		try {
@@ -168,7 +168,7 @@ public class AdminServlet extends HttpServlet {
 
 	private void getEditUser(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		String url = "adminuseredit.jsp";
+		String url = "/WEB-INF/views/adminuseredit.jsp";
 		String email = request.getParameter("email");
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
 		try {
@@ -236,7 +236,7 @@ public class AdminServlet extends HttpServlet {
 
 	private void getAllHotelsMgmt(HttpServletRequest request, HttpServletResponse response) {
 		// Get All hotels in a list, + possibility to edit or remove them
-		String url="adminhotelmgmt.jsp";
+		String url="/WEB-INF/views/adminhotelmgmt.jsp";
 		try {
 			List<Hotel> hotels = HotelDaoUtil.getAllHotels();
 			request.setAttribute("hotels", hotels);
@@ -256,7 +256,7 @@ public class AdminServlet extends HttpServlet {
 
 	private void getAllUsersMgmt(HttpServletRequest request, HttpServletResponse response) {
 		// Get All users in a list, + possibility to edit or remove them
-		String url="adminusermgmt.jsp";
+		String url="/WEB-INF/views/adminusermgmt.jsp";
 		Map <User,Role> mapUserRole = new LinkedHashMap<>();
 		try {
 			List<User> users =UserDaoUtil.getAllUsers();
@@ -289,7 +289,7 @@ public class AdminServlet extends HttpServlet {
 		// List all Hotels
 		// Add/modify/remove users, roles and hotels
 		System.out.println("INSIDE Admin HomePage");
-		String url = "adminhome.jsp";
+		String url = "/WEB-INF/views/adminhome.jsp";
 		int userCount =0;
 		int hotelCount = 0;
 				

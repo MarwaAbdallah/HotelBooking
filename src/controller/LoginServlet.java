@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -87,20 +88,32 @@ public class LoginServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private void doSignOutUser(HttpServletRequest request, 
-			HttpServletResponse response)  throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		// Authenticate, then sends to page depending to role and user
-
-		//String email = request.getRemoteUser();
-		//HttpSession session = request.getSession(false);
+	private void signout(HttpServletRequest request, 
+			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Inside Logout");
 		HttpSession session = request.getSession(false);
 		if (session!=null) {
 			session.invalidate();
 		}
 		request.logout();
+	}
+	private void doSignOutUser(HttpServletRequest request, 
+			HttpServletResponse response)  throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	    // Delete all the cookies
+		Cookie[] cookies = request.getCookies();
+	    if (cookies != null) {
+	 
+	        for (int i = 0; i < cookies.length; i++) {
+	 
+	            Cookie cookie = cookies[i];
+	            cookies[i].setValue(null);
+	            cookies[i].setMaxAge(0);
+	            response.addCookie(cookie);
+	        }
+	    }
+		signout(request,response);
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/HotelManagementSystem");
 		dispatcher.forward(request,response);
 	}
@@ -109,15 +122,23 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String email = request.getParameter("email");
 		String pwd = request.getParameter("password");
-
-		try {
+		String userPrincipal;
+		
+		HttpSession session;
+		if (request.getRemoteUser() == null) {
 
 			System.out.println("In doSignInuser, user/ password : "+
 					email+" / "+pwd);
 			request.login(email, pwd);
-			String userPrincipal = request.getUserPrincipal().getName();
-			HttpSession session = request.getSession();
+			userPrincipal = request.getUserPrincipal().getName();
+			session = request.getSession();
 			session.setAttribute("usrPrincipal", userPrincipal);
+		} else {
+			session = request.getSession();
+			userPrincipal = request.getUserPrincipal().getName();
+		}
+		
+		try {
 			
 			Role role = UserDaoUtil.getUserRole(userPrincipal);
 			String rolename = role.getRole();
@@ -163,7 +184,7 @@ public class LoginServlet extends HttpServlet {
 	private void getSignInPage(HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String url="signin.jsp";
+		String url="/WEB-INF/views/signin.jsp";
 		String from= request.getParameter("fromb");
 		if((request.getSession(false)!= null)&(request.getRemoteUser()!=null)) {
 			System.out.println("User already signed in !");

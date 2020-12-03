@@ -73,7 +73,7 @@ public class InitializeServlet extends HttpServlet {
 		// get users from DB util
 		List<Location> locs = LocationDaoUtil.getAllLocations();		// add users to the request
 		request.setAttribute("LOCATION_LIST",locs);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request,response);
 		
 		
