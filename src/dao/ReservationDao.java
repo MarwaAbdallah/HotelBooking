@@ -36,25 +36,38 @@ public class ReservationDao {
 			myCon=datasource.getConnection();
 			//create SQL for insert
 			String sql = "INSERT INTO reservations" + 
-			"(user_id, checkin, checkout, room_id, hotel_id)" 
+			"(user_id, checkin, checkout, room_id, hotel_id, price)" 
 						+ " VALUES(?,?,?,?,?,?)";
 			
 			myStmt=myCon.prepareStatement(sql);
 			// set the param values for the USER (the "?")
 			myStmt.setInt(1,r.getCustomer().getId());
+			System.out.println("userId"+r.getCustomer().getId());
+			
 			myStmt.setObject(2, r.getFromStayDate());
+			System.out.println("checkin"+r.getFromStayDate());
+			
 			myStmt.setObject(3, r.getToStayDate());
+			System.out.println("checkout"+r.getToStayDate());
+			
 			myStmt.setInt(4,r.getBedding().getId());
+			System.out.println("roomid"+r.getBedding().getId());
+			
 			myStmt.setInt(5, r.getHotel().getId());
+			System.out.println("hotelid"+r.getHotel().getId());
+			
 			myStmt.setDouble(6,r.getPrice());	
+			System.out.println("price"+r.getPrice());
+			
 			myStmt.execute();
 			String sqlb = "update rooms"
-					+ " set is_booked = 'true'"
+					+ " set is_booked = ?"
 					+ "where room_id = ?";
 					
 			myStmtb=myCon.prepareStatement(sql);
-			myStmtb.setInt(1, r.getBedding().getHotelId());
-			myStmtb.execute();
+			myStmtb.setBoolean(1, true);
+			myStmtb.setInt(2, r.getBedding().getId());
+			int changedRows = myStmtb.executeUpdate();
 		} 
 		finally {
 				DBManager.closeb(myCon, myStmt, myStmtb,null);	

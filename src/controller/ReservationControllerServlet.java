@@ -169,14 +169,22 @@ public class ReservationControllerServlet extends HttpServlet{
 	private void doReserve(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String url = "/WEB-INF/views/confirmation.jsp";
-		String userEmail = request.getRemoteUser();
-		int hotelId = Integer.parseInt(request.getParameter("hotelId"));
-		int roomId = Integer.parseInt(request.getParameter("roomId"));
-		double roomPrice = Double.parseDouble(request.getParameter("roomPrice"));
-		System.out.println("checkin :"+ request.getParameter("checkIn")+
-				"checkout :"+ request.getParameter("checkOut"));
-		LocalDate checkIn = LocalDate.parse(request.getParameter("checkIn"));
-		LocalDate checkOut = LocalDate.parse(request.getParameter("checkOut"));
+		HttpSession mySession = request.getSession(false);
+		
+		String userEmail = (String) mySession.getAttribute("user");
+		System.out.println("\nUSER: "+userEmail);
+		Cookie[] cookies = request.getCookies();
+		Map<String, String> myCookie = new HashMap<>();
+		for (Cookie c : cookies) {
+			myCookie.put(c.getName(), c.getValue());
+			System.out.print("cookie : "+c.getName()+" + "+c.getValue());
+			System.out.print("myCookie : "+myCookie.get(c.getName()));
+		}
+		int hotelId = Integer.parseInt(myCookie.get("hotelId"));
+		int roomId = Integer.parseInt(myCookie.get("roomId"));
+		double roomPrice = Double.parseDouble(myCookie.get("roomPrice"));
+		LocalDate checkIn = LocalDate.parse(myCookie.get("checkIn"));
+		LocalDate checkOut = LocalDate.parse(myCookie.get("checkOut"));
 
 		try {
 			User user = UserDaoUtil.getUserfromPrincipal(userEmail);
@@ -204,6 +212,19 @@ public class ReservationControllerServlet extends HttpServlet{
 		}
 	
 	}
+	 static void getCheckoutPagePostSignIn(HttpServletRequest request, HttpServletResponse response) {
+		 String url="/WEB-INF/views/checkoutsignin.jsp";
+		 RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
+			try {
+				requestDispatcher.forward(request, response);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 }
 	 static void getCheckoutPage(HttpServletRequest request, HttpServletResponse response) {
 		String url = "";
 		//if (request.getRemoteUser()!= null) {
@@ -215,9 +236,9 @@ public class ReservationControllerServlet extends HttpServlet{
 			String hotelName = request.getParameter("hotelName");
 			String roomNo = request.getParameter("roomBedNo");
 			String  roomPrice = request.getParameter("roomPrice");
-			
-			hotelName = hotelName.replaceAll("\\s", "");;
 			System.out.println("hotelName = "+hotelName);
+			hotelName = hotelName.replaceAll("\\s", "");;
+			
 			
 			Cookie[] cookies = request.getCookies();
 //			if (cookies != null) {
@@ -227,24 +248,21 @@ public class ReservationControllerServlet extends HttpServlet{
 				newCook.put("roomBedsNo", roomNo);
 				newCook.put("hotelId", hotelId);
 				newCook.put("hotelName", hotelName);
-				
-				for (String name : newCook.keySet()) {
-					System.out.println("in newcook : Name " + name + ", value"
-				+ newCook.get(name));
-					
-					for (int i = 1; i < cookies.length; i++) {
-						
-						String cn = cookies[i].getName();
-						System.out.println("Cookie :" + cn + ", :" + cookies[i].getValue());
-						if (newCook.containsKey(cn)) {
-							String val = newCook.get(cn);
-							cookies[i].setValue(val);
-
-						} else {
-							Cookie c = new Cookie(name, newCook.get(name));
-							response.addCookie(c);
-							
+				for (String s : newCook.keySet()) {
+					int indx =-1;
+					for (int j = 0; j< cookies.length; j++) {
+						if (s.equals(cookies[j].getName())) {
+							indx = j;
 						}
+					}
+					// If cookie present (indx is its index in cookie array
+					// modify it. Otherwise, create new one
+					if (indx > 0) {
+						cookies[indx].setValue(newCook.get(s));
+					} else {
+						Cookie cookie = new Cookie(s, newCook.get(s));
+						response.addCookie(cookie);
+						request.setAttribute(s, newCook.get(s)); // to access in same request
 					}
 				}
 		

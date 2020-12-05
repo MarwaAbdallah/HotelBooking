@@ -22,8 +22,13 @@
 				<div class="card">
 					<div class="card-body w-auto p-3">
 						<p class="card-text">
+						<c:if test="${cookie.containsKey('city')}">
 							<c:out
 								value='${cookie["city"].value}, ${cookie["country"].value}' />
+						</c:if>
+						<c:if test="${!cookie.containsKey('city')}">
+							<c:out value="${city}, ${country}"/>
+						</c:if>
 						</p>
 					</div>
 				</div>
@@ -35,7 +40,13 @@
 				<div class="card">
 					<div class="card-body w-auto p-3">
 						<p class="card-text">
-							<c:out value='${cookie["checkIn"].value}' />
+							<c:if test="${cookie.containsKey('checkIn')}">
+								<c:out
+									value='${cookie["checkIn"].value}' />
+							</c:if>
+							<c:if test="${!cookie.containsKey('checkIn')}">
+								<c:out value="${checkIn}" />
+							</c:if>
 						</p>
 					</div>
 				</div>
@@ -47,7 +58,13 @@
 				<div class="card">
 					<div class="card-body w-auto p-3">
 						<p class="card-text">
-							<c:out value='${cookie["checkOut"].value}' />
+							<c:if test="${cookie.containsKey('checkOut')}">
+								<c:out value='${cookie["checkOut"].value}' />
+							</c:if>
+							<c:if test="${!cookie.containsKey('checkOut')}">
+								<c:out value="${checkOut}" />
+							</c:if>
+							
 						</p>
 					</div>
 				</div>

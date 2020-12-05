@@ -51,7 +51,7 @@ public class UserDao {
 		Connection myCon = null;
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
-		
+		System.out.println("principal"+principal);
 		try {
 			myCon = datasource.getConnection();
 			String sql = "select u.*, ur.role_name from users u, users_roles ur" + 

@@ -50,6 +50,9 @@
   </head>
   <body>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+					<c:url var="GetMgmtHome" value="customer">
+					<c:param name="command" value="GET_HOME_CUSTOMER" />
+				</c:url>
 		<c:url var="SignIn" value="LoginServlet">
 				<c:param name="action" value="REQUEST_SIGNIN" />
 			</c:url>
@@ -68,15 +71,15 @@
 			</ul>
 		
 		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-			<c:if test="${not empty usrPrincipal}">
+			<c:if test="${not empty user}">
 			
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><p></p></li>
+				<li class="nav-item"><a class="nav-link" href="${GetMgmtHome}">Home</a></li>
 				<li class="nav-item"><a class="nav-link" href="${SignOut}">Sign
-						Out <c:out value='${usrPrincipal}'/></a></li>
+						Out <c:out value='${user}'/></a></li>
 			</ul>
 			</c:if>
-			<c:if test="${empty usrPrincipal}">
+			<c:if test="${empty user}">
 			<ul class="navbar-nav ml-auto">
 
 				<li class="nav-item"><a class="nav-link" href="${SignIn}">Sign

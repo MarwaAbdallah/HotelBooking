@@ -62,7 +62,14 @@
            <div class="card-body d-flex flex-column align-items-start">
              <strong class="d-inline-block mb-2 text-primary">Hotel</strong>
              <h3 class="mb-0">
-                <c:out value='${cookie["hotelName"].value}'/>
+				<c:if test="${cookie.containsKey('hotelName')}">
+					<c:out
+						value='${cookie["hotelName"].value}' />
+				</c:if>
+				<c:if test="${!cookie.containsKey('hotelName')}">
+					<c:out value="${hotelName}" />
+				</c:if>
+
              </h3>
              <p class="card-text mb-auto">This hotel is located in heart of city</p>
 
@@ -75,6 +82,13 @@
            <div class="card-body d-flex flex-column align-items-start">
              <strong class="d-inline-block mb-2 text-success">Room</strong>
              <h3 class="mb-0">
+				<c:if test="${cookie.containsKey('roomId')}">
+					<c:out
+						value='${cookie["roomId"].value}' />
+				</c:if>
+				<c:if test="${!cookie.containsKey('roomId')}">
+					<c:out value="${roomId}" />
+				</c:if>
                <c:out value='${cookie["roomId"].value}'/>
              </h3>
              <div class="mb-1 text-muted"><c:out value='${cookie["roomPrice"].value}'/></div>

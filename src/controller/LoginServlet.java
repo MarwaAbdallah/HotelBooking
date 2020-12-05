@@ -63,8 +63,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
-		String other = request.getParameter("name");
-		String email = request.getParameter("email");
+
 
 		if (action == null) {
 			action="REQUEST_SIGNIN"; // default behavior
@@ -79,6 +78,10 @@ public class LoginServlet extends HttpServlet {
 			case "SIGNOUT":
 				doSignOutUser(request,response);
 				break;
+			case "FORWARD_HOME":
+				forwardToRoleBasedServlet(request, response);
+				break;
+				
 		}
 	}
 	
@@ -136,6 +139,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			session = request.getSession();
 			userPrincipal = request.getUserPrincipal().getName();
+			session.setAttribute("user", userPrincipal);
 		}
 		
 		try {
@@ -159,7 +163,7 @@ public class LoginServlet extends HttpServlet {
 					String from= request.getParameter("from");
 					if (from != null && !from.isEmpty()) {
 						System.out.println("supposed to : response.sendRedirect(from)");
-						ReservationControllerServlet.getCheckoutPage(request, response);
+						ReservationControllerServlet.getCheckoutPagePostSignIn(request, response);
 					} else {
 						forwardToRoleBasedServlet(request, response);
 					}
