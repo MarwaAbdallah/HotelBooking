@@ -13,10 +13,10 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/floating-labels/">
 
     <!-- Bootstrap core CSS -->
-    <link href="templates/Floating labels example for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="templates/Floating labels example for Bootstrap_files/floating-labels.css" rel="stylesheet">
+    <link href="css/floating-labels.css" rel="stylesheet">
   </head>
 
   <body>

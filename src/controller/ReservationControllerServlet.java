@@ -112,8 +112,8 @@ public class ReservationControllerServlet extends HttpServlet{
 			}
 		 * **/
 		String json = "{"
-				+ "\"booked\": false, "
-				+ "\"roomNo\": 998, "
+				+ "\"booked\": true, "
+				+ "\"roomNo\": "+res.getBedding().getId()+", "
 				+ "\"isBooked\": false,"
 				+ "\"price\": 340.07 }";
 		String url = "http://localhost:8080/reservation";

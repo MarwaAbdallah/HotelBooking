@@ -27,7 +27,7 @@
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="img/Dashboard Template for Bootstrap_files/dashboard.css"
+<link href="css/dashboard.css"
 	rel="stylesheet">
 <style type="text/css">/* Chart.js */
 @

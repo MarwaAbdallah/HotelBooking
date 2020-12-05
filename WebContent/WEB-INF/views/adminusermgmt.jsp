@@ -24,11 +24,11 @@
 
 <!-- Bootstrap core CSS -->
 <link
-	href="img/Dashboard Template for Bootstrap_files/bootstrap.min.css"
+	href="css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="img/Dashboard Template for Bootstrap_files/dashboard.css"
+<link href="css/dashboard.css"
 	rel="stylesheet">
 <style type="text/css">/* Chart.js */
 @
@@ -60,6 +60,12 @@ to {
 
 <body>
 <%@ include file="header.jsp" %>
+
+  <div class="jumbotron">
+    <div class="container">
+
+      </div>
+  </div>
 
 	<div class="container-fluid">
 		<div class="row">
