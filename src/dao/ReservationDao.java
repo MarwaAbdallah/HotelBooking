@@ -29,17 +29,18 @@ public class ReservationDao {
 	public void createReservation(Reservation r) 
 			throws Exception {
 		Connection myCon = null;
+		Connection myConb = null;
 		PreparedStatement myStmt=null;
 		PreparedStatement myStmtb=null;
 		try {
 			// get DB connection
 			myCon=datasource.getConnection();
 			//create SQL for insert
-			String sql = "INSERT INTO reservations" + 
+			String sql1 = "INSERT INTO reservations" + 
 			"(user_id, checkin, checkout, room_id, hotel_id, price)" 
 						+ " VALUES(?,?,?,?,?,?)";
 			
-			myStmt=myCon.prepareStatement(sql);
+			myStmt=myCon.prepareStatement(sql1);
 			// set the param values for the USER (the "?")
 			myStmt.setInt(1,r.getCustomer().getId());
 			System.out.println("userId"+r.getCustomer().getId());
@@ -60,17 +61,21 @@ public class ReservationDao {
 			System.out.println("price"+r.getPrice());
 			
 			myStmt.execute();
-			String sqlb = "update rooms"
+			String sql2 = "update rooms"
 					+ " set is_booked = ?"
 					+ "where room_id = ?";
 					
-			myStmtb=myCon.prepareStatement(sql);
+			myConb = datasource.getConnection();
+			myStmtb=myConb.prepareStatement(sql2);
 			myStmtb.setBoolean(1, true);
 			myStmtb.setInt(2, r.getBedding().getId());
 			int changedRows = myStmtb.executeUpdate();
 		} 
-		finally {
-				DBManager.closeb(myCon, myStmt, myStmtb,null);	
+		catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+		} 		finally {
+				DBManager.close(myCon, myStmt, null);
+				DBManager.close(myConb, myStmtb, null);
 		}
 		
 	}

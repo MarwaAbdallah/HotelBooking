@@ -136,6 +136,7 @@ public class LoginServlet extends HttpServlet {
 			userPrincipal = request.getUserPrincipal().getName();
 			session = request.getSession();
 			session.setAttribute("usrPrincipal", userPrincipal);
+			session.setAttribute("user", userPrincipal);
 		} else {
 			session = request.getSession();
 			userPrincipal = request.getUserPrincipal().getName();

@@ -47,29 +47,6 @@ public class DBManager {
 		}
 	}
 
-	public static void closeb(Connection myCon, PreparedStatement myStmt1, 
-			PreparedStatement myStmt2,ResultSet myRs) {
-		// TODO Auto-generated method stub
-		try {
-			if(myRs!=null) {
-				myRs.close();
-			}
-			if(myStmt1!=null) {
-				myStmt1.close();
-			}
-			if(myStmt2!=null) {
-				myStmt2.close();
-			}
-			if(myCon!=null) {
-				myCon.close();  //doesn't really close it, put it back in connection pool so its available for someone else to use
-			}
-			
-		}catch(Exception exc) {
-			exc.printStackTrace();
-		}
-		
-	}
 	
-
 	
 }

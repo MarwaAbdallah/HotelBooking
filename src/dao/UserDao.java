@@ -199,12 +199,13 @@ public class UserDao {
 
 	public void editUser(User user) throws SQLException {
 		// TODO Auto-generated method stub
-		Connection myCon = null;
+		Connection myCon1 = null;
+		Connection myCon2 = null;
 		PreparedStatement myStmt1=null;
 		PreparedStatement myStmt2=null;
 		
 		try {
-			myCon=datasource.getConnection();
+			myCon1=datasource.getConnection();
 			String sql1 = "update users" + 
 					" set email = ?," + 
 					" enabled= ? " + 
@@ -215,40 +216,44 @@ public class UserDao {
 					" where email= ?";
 			
 			
-			myStmt1=myCon.prepareStatement(sql1);
+			myStmt1=myCon1.prepareStatement(sql1);
 			myStmt1.setString(1,user.getEmail());
 			myStmt1.setBoolean(2,user.isEnabled());
 			myStmt1.setInt(3, user.getId());
 			myStmt1.execute();	
 			
-			myStmt2=myCon.prepareStatement(sql2);
+			myCon2=datasource.getConnection();
+			myStmt2=myCon2.prepareStatement(sql2);
 			myStmt2.setString(1,user.getRole());
 			myStmt2.setString(2,user.getEmail());
 			myStmt2.execute();	
 		} 
 		finally {
-				DBManager.closeb(myCon, myStmt1, myStmt2,null);	
+				DBManager.close(myCon1, myStmt1, null);	
+				DBManager.close(myCon2, myStmt2, null);	
 		}
 	}
 
 	public void addUser(User user) {
 		// TODO Auto-generated method stub
-		Connection myCon = null;
+		Connection myCon1 = null;
+		Connection myCon2 = null;
 		PreparedStatement myStmt1=null;
 		PreparedStatement myStmt2=null;
 		try {
-			myCon = datasource.getConnection();
+			myCon1 = datasource.getConnection();
 			String sql1 = "insert into users(email,upassword,enabled)" + 
 					" values (?,?,?)";
 			String sql2="insert into users_roles(email,role_name)" + 
 					" values(?,?)";
-			myStmt1 = myCon.prepareStatement(sql1);
+			myStmt1 = myCon1.prepareStatement(sql1);
 			myStmt1.setString(1, user.getEmail());
 			myStmt1.setString(2, user.getPassword());
 			myStmt1.setBoolean(3, user.isEnabled());
 			myStmt1.execute();
 			
-			myStmt2 = myCon.prepareStatement(sql2)
+			myCon2 = datasource.getConnection();
+			myStmt2 = myCon2.prepareStatement(sql2)
 ;			myStmt2.setString(1, user.getEmail());
 			myStmt2.setString(2, user.getRole());
 			myStmt2.execute();
@@ -256,7 +261,8 @@ public class UserDao {
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.closeb(myCon, myStmt1, myStmt2, null);
+			DBManager.close(myCon1, myStmt1, null);
+			DBManager.close(myCon2, myStmt2, null);
 		}
 	}
 	

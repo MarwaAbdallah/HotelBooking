@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import dao.UserDao;
@@ -68,13 +69,18 @@ public class RegisterServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String url="";
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		String pwd = request.getParameter("password");
 		// verify if email already exist. if it does resend to sign up page with indication of pb
 		try {
 			if (!UserDaoUtil.isUserPresentInDb(email)) {
-				User user = new User(email,password,"Customer");
+				User user = new User(email,pwd,"Customer");
 				UserDaoUtil.addUser(user);
 				url ="/WEB-INF/views/myaccount.jsp";
+				request.login(email, pwd);
+				
+				HttpSession session = request.getSession();
+				session.setAttribute("usrPrincipal", email);
+				session.setAttribute("user", email);
 			} else {
 				url = "/WEB-INF/views/signup.jsp";
 				String message = "Email "+email+" is already used,"
