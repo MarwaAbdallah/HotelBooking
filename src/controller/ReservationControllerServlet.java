@@ -103,48 +103,13 @@ public class ReservationControllerServlet extends HttpServlet{
 				e.printStackTrace();
 		}
 	}
-<<<<<<< HEAD
-	private void postReservation(HttpServletRequest req, HttpServletResponse resp,
-			int hotelId, Reservation res) {
-		/** 
-		 * Parameters userId:1006
-			fromDate:2016-08-16
-			toDate:2016-08-16
-			customerEmail:fcwqfnwqjiiji
-		* 	
-			json Body : 
-			{
-			    "booked": false,
-			    "roomNo": 5000,
-			    "isBooked": false,
-			    "price": 340.07
-			}
-		 * **/
-		String json = "{"
-				+ "\"booked\": true, "
-				+ "\"roomNo\": "+res.getBedding().getId()+", "
-				+ "\"isBooked\": false,"
-				+ "\"price\": 340.07 }";
-=======
-    private HttpRequest.BodyPublisher buildFormDataFromMap(Map<String, String> data) {
-        var builder = new StringBuilder();
-        for (Map.Entry<String, String> entry : data.entrySet()) {
-            if (builder.length() > 0) {
-                builder.append("&");
-            }
-            builder.append(entry.getKey());
-            builder.append("=");
-            builder.append(entry.getValue());
-        }
-        System.out.println(builder.toString());
-        return HttpRequest.BodyPublishers.ofString(builder.toString());
-    }
+
+
 	private void postCreateReservation(HttpServletRequest req, HttpServletResponse resp,
 			int hotelId, Reservation res) throws IOException, InterruptedException {
 
->>>>>>> 556c67d65500fcc40ce5de3be3329387475dc8e1
+
 		String url = "http://localhost:8080/reservation";
-		String param = "?userId=1008&fromDate=2016-08-16&toDate=2016-08-16&customerEmail=ohhellllYeah";
 
 		HttpClient httpClient = HttpClient.newBuilder()
 	            .version(HttpClient.Version.HTTP_2)
@@ -161,7 +126,7 @@ public class ReservationControllerServlet extends HttpServlet{
         data.put("customerEmail", res.getCustomer().getEmail());
         data.put("userId", "1008"); // ID for service account to make bookings
         data.put("roomId", String.valueOf(roomId) ); // ID for service account to make bookings
-        System.out.println("\n\n"+buildFormDataFromMap(data).toString());
+
         
         String requestBody = objMapper
                 .writerWithDefaultPrettyPrinter()
