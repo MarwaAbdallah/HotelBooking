@@ -47,7 +47,7 @@ Hotel Employee home page accessible only for users with Role=Hotel Manager,
 as defined in the servlet-security section of pom.xml
 
 The Hotel Employee for Hotel X can see all reservations, made by any user, for this hotel.
-<img  alt="Admin Home" src="WebContent/img/admin_home.png">
+
 
 #### Admin
 Admin Home Page : Admin can add / edit / delete application users with a role chosen by admin.
