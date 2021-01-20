@@ -119,6 +119,7 @@ public class HotelControllerServlet extends HttpServlet {
 			request.setAttribute("hotel", hotel);
 			request.setAttribute("ROOM_MAP", map);
 		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request,response);
 
@@ -172,6 +173,7 @@ public class HotelControllerServlet extends HttpServlet {
 				Cookie cookie = new Cookie(s, newCook.get(s));
 				response.addCookie(cookie);
 				request.setAttribute(s, newCook.get(s)); // to access in same request
+
 				System.out.println("New COokie created  : "+cookie.getName()+
 						" , "+cookie.getValue());
 			}
@@ -180,6 +182,9 @@ public class HotelControllerServlet extends HttpServlet {
 
 		request.setAttribute("HOTELMAP",map);
 		String url="/WEB-INF/views/choosestaying.jsp";
+		/** request forwarding transfers the request internally on the server side, 
+		 * redirecting the request makes the client browser to make the request 
+		 * to the given url along with the cookies for the particular domain.**/
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request,response);
 		

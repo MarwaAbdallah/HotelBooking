@@ -71,21 +71,26 @@ public class AgentServlet extends HttpServlet {
 			case "GET_HOME_AGENT" :
 				getAgentHomePage(request,response);
 				break;
+			
 		}
 	}
+
 
 	private void getAgentHomePage(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException {
 		// TODO Auto-generated method stub
 		List<Reservation> reservations = new ArrayList<>();
 		String email = request.getRemoteUser();
+		
 		System.out.println("userPrincipal is :"+email);
 		String url = "/WEB-INF/views/agenthome.jsp";
 		if (email != null) {
 			try {
 				reservations = ReservationDaoUtil.
 						getAllReservationByHotelBasedOnEmployee(email);
+				String hotelName = HotelDaoUtil.getHotelNameFromEmployeeEmail(email);
 				request.setAttribute("reservations", reservations);
+				request.setAttribute("hotelName", hotelName);
 			}catch (Exception exc) {
 				throw new ServletException(exc);
 			}

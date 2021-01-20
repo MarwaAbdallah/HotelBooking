@@ -7,14 +7,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -27,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.HotelDao;
 import dao.ReservationDao;
@@ -37,7 +43,6 @@ import model.Reservation;
 import model.Room;
 import model.User;
 import util.RoomInfo;
-
 @WebServlet("/ReservationControllerServlet")
 public class ReservationControllerServlet extends HttpServlet{
 
@@ -88,6 +93,9 @@ public class ReservationControllerServlet extends HttpServlet{
 				case "RESERVE_ROOM_CHOSEN":
 					doReserve(request,response);
 					break;
+				case "CANCEL_RESERVATION":
+					cancelReserve(request,response);
+					break;
 					
 			} 
 		}catch (Exception e) {
@@ -95,77 +103,131 @@ public class ReservationControllerServlet extends HttpServlet{
 				e.printStackTrace();
 		}
 	}
-	private void postReservation(HttpServletRequest req, HttpServletResponse resp,
-			int hotelId, Reservation res) {
-		/** 
-		 * Parameters userId:1006
-			fromDate:2016-08-16
-			toDate:2016-08-16
-			customerEmail:fcwqfnwqjiiji
-		* 	
-			json Body : 
-			{
-			    "booked": false,
-			    "roomNo": 5000,
-			    "isBooked": false,
-			    "price": 340.07
-			}
-		 * **/
-		String json = "{"
-				+ "\"booked\": false, "
-				+ "\"roomNo\": 998, "
-				+ "\"isBooked\": false,"
-				+ "\"price\": 340.07 }";
+    private HttpRequest.BodyPublisher buildFormDataFromMap(Map<String, String> data) {
+        var builder = new StringBuilder();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            if (builder.length() > 0) {
+                builder.append("&");
+            }
+            builder.append(entry.getKey());
+            builder.append("=");
+            builder.append(entry.getValue());
+        }
+        System.out.println(builder.toString());
+        return HttpRequest.BodyPublishers.ofString(builder.toString());
+    }
+	private void postCreateReservation(HttpServletRequest req, HttpServletResponse resp,
+			int hotelId, Reservation res) throws IOException, InterruptedException {
+
 		String url = "http://localhost:8080/reservation";
-		String param = "?userId=1006&fromDate=2016-08-16&toDate=2016-08-16&customerEmail=ohhellllYeah";
-		url = url + param;
-		  System.out.println("nSending 'POST' request to URL : " + url);
+		String param = "?userId=1008&fromDate=2016-08-16&toDate=2016-08-16&customerEmail=ohhellllYeah";
 
-		try {
-			Hotel hotel = HotelDaoUtil.getHotel(hotelId);
-			//if (hotel.getName().equals("Obelisk Resort")) { 
-				URL obj = new URL(url);
-			  HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-			 
-			  // Setting basic post request
-			  con.setRequestMethod("POST");
-			  con.setRequestProperty("User-Agent", "Mozilla/5.0");
-			  con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-			  con.setRequestProperty("Content-Type","application/json");
+		HttpClient httpClient = HttpClient.newBuilder()
+	            .version(HttpClient.Version.HTTP_2)
+	            .build();
 
-			  // Send post request
-			  con.setDoOutput(true);
-			  DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-			  wr.writeBytes(json);
-			  wr.flush();
-			  wr.close();
-			 
-			  int responseCode = con.getResponseCode();
-			  System.out.println("nSending 'POST' request to URL : " + url);
-			  System.out.println("Post Data : " + json);
-			  System.out.println("Response Code : " + responseCode);
-			 
-			  BufferedReader in = new BufferedReader(
-			          new InputStreamReader(con.getInputStream()));
-			  String output;
-			  StringBuffer response = new StringBuffer();
-			 
-			  while ((output = in.readLine()) != null) {
-			   response.append(output);
-			  }
-			  in.close();
-			  
-			  //printing result from response
-			  System.out.println(response.toString());
-			    //}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        ObjectMapper objMapper = new ObjectMapper();
+
+				
+        Map<String, String> data = new HashMap<>();
+        int roomId = res.getBedding().getId();
+        
+        data.put("fromDate", res.getFromStayDate().toString());
+        data.put("toDate", res.getToStayDate().toString());
+        data.put("customerEmail", res.getCustomer().getEmail());
+        data.put("userId", "1008"); // ID for service account to make bookings
+        data.put("roomId", String.valueOf(roomId) ); // ID for service account to make bookings
+        System.out.println("\n\n"+buildFormDataFromMap(data).toString());
+        
+        String requestBody = objMapper
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(data);
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .POST(BodyPublishers.ofString(requestBody))
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .build();
+        
+        
+        System.out.println("\n\n"+request.toString());
+        System.out.println("\n\n"+request.uri().getQuery());
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        // print status code
+        System.out.println(response.statusCode());
+
+        // print response body
+        System.out.println(response.body());
+		  
 		
 		
 	}
+	private void postCancelReservation(HttpServletRequest req, HttpServletResponse resp, long reservationId) throws IOException, InterruptedException {
+		// TODO Auto-generated method stub
+		
+		String param = String.valueOf(reservationId);
+		String url = "http://localhost:8080/reservation/"+param;
+		HttpClient httpClient = HttpClient.newBuilder()
+	            .version(HttpClient.Version.HTTP_2)
+	            .build();
+
+		 HttpRequest request = HttpRequest.newBuilder()
+		            .uri(URI.create(url))
+		            .header("Content-Type", "application/json")
+		            .DELETE()
+		            .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        // print status code
+        System.out.println(response.statusCode());
+
+        // print response body
+        System.out.println(response.body());
+		
+	}
 	
+	private void cancelReserve(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+				String url = "/WEB-INF/views/confirmation.jsp";
+
+				long reservationId = Long.parseLong(request.getParameter("reservationId"));
+				int roomId = Integer.parseInt(request.getParameter("roomId"));
+				String hotelName = request.getParameter("hotelName");
+				System.out.println("Hotel name: "+hotelName);
+				try {
+					ReservationDaoUtil.cancelReservation(reservationId, roomId);
+
+					if(Objects.equals(hotelName , "Obelisk Resort")) {
+						System.out.println("Oblesik Resort is the name of the hotel we are cancelling"
+								+ "res from");
+						postCancelReservation(request, response,reservationId);
+						
+					} else {
+						System.out.println("Oblesik Resort is not hotel name, it was : "
+								+ hotelName );
+					}
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String data = "sucessfull!";
+				request.setAttribute("data",data);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
+				try {
+					requestDispatcher.forward(request, response);
+				} catch (ServletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	}
+	
+
 	private void doReserve(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String url = "/WEB-INF/views/confirmation.jsp";
@@ -192,8 +254,14 @@ public class ReservationControllerServlet extends HttpServlet{
 			Hotel hotel = HotelDaoUtil.getHotel(hotelId);
 			Reservation reserv = new Reservation(checkIn,checkOut,user,hotel,room);
 			ReservationDaoUtil.createReservation(reserv);
-			
-			postReservation(request, response,hotelId, reserv);
+			if(Objects.equals(hotel.getName(), "Obelisk Resort")) {
+				System.out.println("Oblesik Resort is the name of the hotel we are creating"
+						+ "res from");
+				postCreateReservation(request, response,hotelId, reserv);
+			} else {
+				System.out.println("Oblesik Resort is not hotel name, it was : "
+						+ hotel.getName());
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

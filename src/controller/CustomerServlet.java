@@ -73,9 +73,7 @@ public class CustomerServlet extends HttpServlet {
 			case "EDIT_ACCOUNT" :
 			//	doReserve(request,response);
 				break;
-			case "CANCEL_RESERVATION" :
-			//	doReserve(request,response);
-				break;
+
 		}
 	}
 
@@ -101,6 +99,8 @@ public class CustomerServlet extends HttpServlet {
 		dispatcher.forward(request,response);
 		
 	}
+	
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
