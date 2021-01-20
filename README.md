@@ -30,7 +30,7 @@
 #### Reserve : First login or sign in before completing reservation
 Customer can sign in, or if they don't have an account, sign up.
 It's a necessary step to proceed with reservation
-<img  alt="Reserve " src="WebContent/img/reserve-1.png">
+<img  alt="Reserve " src="WebContent/img/reserve-sign-in-first.png">
 
 #### Reserve : Sign In (or Sign Up)
 Customer can sign in, or if they don't have an account, sign up.
