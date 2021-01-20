@@ -11,8 +11,9 @@
 4 - Administrator : User + user role management, add/remove hotels.<br/>
 
 ### Stack
-- Servlet, JSP (MVC)
+- Servlet, JSP (MVC), JDBC
 - Postgresql DB
+- (+ Servlet Security : Authentication and authorization)
 
 ### Basic System Diagram
 
