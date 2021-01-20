@@ -1,8 +1,11 @@
 # Hotel Booking System
 
+### TL;DR
+This is a Hotel booking application, implementing features of a an app such as Expedia or HoteelBooking.com
+The app supports Role Based Access (RBAC). The functionalities of the app is described in next section in terms of "which type of user can do what"
 
 ### Roles
-1- Anonymous : Can browse reservation (but not make one - requires sign in or sign up).<br/>
+1- Anonymous (non-authenticated user): Can browse Hotels for a chosen location, see pricing per room and availablitiles<br/> (but not make one - requires authentication, sign in or sign up).<br/>
 2- Customer : can make/view/edit/cancel reservations.<br/>
 3- Hotel Employee : Can view/cancel all reservations for the Hotel they are employed in<br/>
 4 - Administrator : User + user role management, add/remove hotels.<br/>
