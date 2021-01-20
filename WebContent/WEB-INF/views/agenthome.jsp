@@ -105,7 +105,7 @@ to {
 					</div>
 				</div>
 
-				<h2>My Reservations</h2>
+				<h2>Reservations for <c:out value='${hotelName}'/></h2>
 				<div class="table-responsive">
 					<table class="table table-bordered table-striped"
 						table-stripedid="dataTable2" width="100%" cellspacing="0">
@@ -120,9 +120,11 @@ to {
 						</thead>
 						<tbody>
 							<c:forEach var="res" items="${reservations}">
-								<c:url var="CancelReservationLink" value="customer">
+								<c:url var="CancelReservationLink" value="ReservationControllerServlet">
 									<c:param name="command" value="CANCEL_RESERVATION" />
-									<c:param name="reservationId" value="${reservation.id}" />
+									<c:param name="reservationId" value="${res.id}" />
+									<c:param name="roomId" value="${res.bedding.id}" />
+									<c:param name="hotelName" value="${res.hotel.name}" />
 								</c:url>
 								<tr>
 

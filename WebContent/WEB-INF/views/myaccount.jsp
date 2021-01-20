@@ -122,9 +122,11 @@ to {
 						</thead>
 						<tbody>
 							<c:forEach var="res" items="${reservations}">
-								<c:url var="CancelReservationLink" value="customer">
+								<c:url var="CancelReservationLink" value="ReservationControllerServlet">
 									<c:param name="command" value="CANCEL_RESERVATION" />
-									<c:param name="reservationId" value="${reservation.id}" />
+									<c:param name="reservationId" value="${res.id}" />
+									<c:param name="roomId" value="${res.bedding.id}" />
+									<c:param name="hotelName" value="${res.hotel.name}" />
 								</c:url>
 								<tr>
 
