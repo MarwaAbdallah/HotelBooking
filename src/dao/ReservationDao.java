@@ -79,6 +79,44 @@ public class ReservationDao {
 		}
 		
 	}
+	public void cancelReservation(long reservationID, int roomId) 
+			throws Exception {
+		Connection myCon = null;
+		Connection myConb = null;
+		PreparedStatement myStmt=null;
+		PreparedStatement myStmtb=null;
+		int resId = (int) reservationID;
+		try {
+			// get DB connection
+			myCon=datasource.getConnection();
+			//create SQL for insert
+			String sql1 = "DELETE FROM reservations" + 
+			" where reservation_id = ?";
+			
+			myStmt=myCon.prepareStatement(sql1);
+			// set the param values for the USER (the "?")
+			myStmt.setInt(1,resId);
+
+		
+			myStmt.execute();
+			String sql2 = "update rooms"
+					+ " set is_booked = ?"
+					+ "where room_id = ?";
+					
+			myConb = datasource.getConnection();
+			myStmtb=myConb.prepareStatement(sql2);
+			myStmtb.setBoolean(1, false);
+			myStmtb.setInt(2, roomId);
+			int changedRows = myStmtb.executeUpdate();
+		} 
+		catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+		} 		finally {
+				DBManager.close(myCon, myStmt, null);
+				DBManager.close(myConb, myStmtb, null);
+		}
+		
+	}
 
 	public List<Reservation> getAllReservationByHotelBasedOnEmployee(String empEmail) 
 			throws SQLException {
@@ -165,6 +203,9 @@ public class ReservationDao {
 		return reservations;
 		
 	}
+
+
+	
 
 
 }

@@ -36,5 +36,8 @@
 	<classpathentry kind="lib" path="/home/marwa/eclipse-workspace-ee/HotelBookingSystem/WebContent/WEB-INF/lib/classmate-1.5.1.jar"/>
 	<classpathentry kind="lib" path="/home/marwa/Downloads/jstl-api-1.2.jar"/>
 	<classpathentry kind="lib" path="/home/marwa/Downloads/jstl-impl.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-annotations-2.12.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-core-2.12.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-databind-2.12.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

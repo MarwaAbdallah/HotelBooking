@@ -89,7 +89,7 @@ public class HotelDao {
 		Connection myCon = null;
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
-		System.out.println("city: "+city+", country: "+country);
+
 		
 		try {
 			myCon = datasource.getConnection();
@@ -115,6 +115,28 @@ public class HotelDao {
 		
 	}
 	
+	public String getHotelNameFromEmployeeEmail(String email) throws SQLException {
+		String hotelName= "";
+		Connection myCon = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		try {
+			myCon = datasource.getConnection();
+			String sql = "select hotels.hotel_name from hotels"
+					+ " hotels, hotels_employees" + 
+					" where hotels.id = hotels_employees.hotel_id" + 
+					" and hotels_employees.employee_email = ?";
+			myStmt = myCon.prepareStatement(sql);
+			myStmt.setString(1,email);
+			myRs = myStmt.executeQuery();
+			if (myRs.next()) {
+				hotelName = myRs.getString("hotel_name");
+			}	
+		}finally {
+			DBManager.close(myCon,myStmt,myRs);
+		}
+		return hotelName;
+	}
 	
 
 	public int getHotelsCount() throws SQLException {
