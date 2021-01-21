@@ -71,7 +71,7 @@
   </div>
  </div>
  <div class="container">
-   <img class="card-img-top" src="img/home-page-pic.jpg" alt="Card image cap">
+   <img class="card-img-top" src="css/home-page-pic.jpg" alt="Card image cap">
 </div>
 
  </div>

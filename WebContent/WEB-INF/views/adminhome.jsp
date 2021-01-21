@@ -50,7 +50,8 @@
   </head>
   <body>
 <%@ include file="header.jsp" %>
-
+<div class="mt-4">
+</div>
 <main role="main">
 
   <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -105,7 +106,7 @@
 
 </main>
 
-<script src="./img/Jumbotron Template · Bootstrap_files/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="js//jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="./Jumbotron Template · Bootstrap_files/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
 </body></html>

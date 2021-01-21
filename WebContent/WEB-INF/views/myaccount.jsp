@@ -23,7 +23,7 @@
 
 <!-- Bootstrap core CSS -->
 <link
-	href="img/Dashboard Template for Bootstrap_files/bootstrap.min.css"
+	href="css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
@@ -58,7 +58,7 @@ to {
 </head>
 <body>
 <%@ include file="header.jsp" %>
-
+<div class="mt-4"></div>
 	<div class="container-fluid">
 		<div class="row">
 			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -149,22 +149,22 @@ to {
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script
-		src="img/Dashboard Template for Bootstrap_files/jquery-3.2.1.slim.min.js"
+		src="js/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
 	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-	<script src="img/Dashboard Template for Bootstrap_files/popper.min.js"></script>
+	<script src="js/popper.min.js"></script>
 	<script
-		src="img/Dashboard Template for Bootstrap_files/bootstrap.min.js"></script>
+		src="js/bootstrap.min.js"></script>
 
 	<!-- Icons -->
-	<script src="img/Dashboard Template for Bootstrap_files/feather.min.js"></script>
+	<script src="js/feather.min.js"></script>
 	<script>
       feather.replace()
     </script>
 
 	<!-- Graphs -->
-	<script src="img/Dashboard Template for Bootstrap_files/Chart.min.js"></script>
+	<script src="js/Chart.min.js"></script>
 	<script>
       var ctx = document.getElementById("myChart");
       var myChart = new Chart(ctx, {

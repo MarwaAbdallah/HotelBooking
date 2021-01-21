@@ -16,7 +16,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this img -->
-    <link href="css/floating-labels.css" rel="stylesheet">
+    <link href="../css/floating-labels.css" rel="stylesheet">
   </head>
 
   <body>
