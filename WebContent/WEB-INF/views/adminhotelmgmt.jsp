@@ -17,19 +17,16 @@
 <link rel="icon"
 	href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
 
-<title>Dashboard Template for Bootstrap</title>
+<title>Hotel Management</title>
 
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
 
 <!-- Bootstrap core CSS -->
-<link
-	href="js/bootstrap.min.css"
-	rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom styles for this template -->
-<link href="css/dashboard.css"
-	rel="stylesheet">
+<!-- Custom styles for this img -->
+<link href="css/floating-labels.css" rel="stylesheet">
 <style type="text/css">/* Chart.js */
 @
 -webkit-keyframes chartjs-render-animation {
@@ -59,14 +56,10 @@ to {
 </head>
 
 <body>
-	<%@ include file="header.jsp" %>
-	<div class="mt-4">
-</div>
-	  <div class="jumbotron">
-    <div class="container">
+	<%@ include file="header.jsp"%>
 
-      </div>
-  </div>
+
+
 
 	<div class="container-fluid">
 		<div class="row">
@@ -78,10 +71,13 @@ to {
 					<c:url var="GetUsrMgmtAdminPage" value="admin">
 						<c:param name="command" value="GET_USER_MGMT_ADMIN" />
 					</c:url>
+					<c:url var="GetAdminHomePage" value="admin">
+						<c:param name="command" value="GET_HOME" />
+					</c:url>
 					<ul class="nav flex-column">
 						<li class="nav-item"><a class="nav-link active"
-							href="https://getbootstrap.com/docs/4.0/examples/dashboard/#">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+							href="${GetAdminHomePage}"> <svg
+									xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 									viewBox="0 0 24 24" fill="none" stroke="currentColor"
 									stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 									class="feather feather-home">
@@ -89,19 +85,26 @@ to {
 									<polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Dashboard
 								<span class="sr-only">(current)</span>
 						</a></li>
-              <li class="nav-item">
-                <a class="nav-link" href="${GetUsrMgmtAdminPage}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                  Users
-                </a>
-              </li>
-						<li class="nav-item"><a class="nav-link" href="${GetHotelsMgmtAdminPage}"><svg
-								xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-								stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers">
+						<li class="nav-item"><a class="nav-link"
+							href="${GetUsrMgmtAdminPage}"> <svg
+									xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+									class="feather feather-users">
+									<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+									<circle cx="9" cy="7" r="4"></circle>
+									<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+									<path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Users
+						</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="${GetHotelsMgmtAdminPage}"><svg
+									xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+									class="feather feather-layers">
 									<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
 									<polyline points="2 17 12 22 22 17"></polyline>
-									<polyline points="2 12 12 17 22 12"></polyline></svg> Hotels 
-						</a></li>
+									<polyline points="2 12 12 17 22 12"></polyline></svg> Hotels </a></li>
 					</ul>
 				</div>
 			</nav>
@@ -153,8 +156,8 @@ to {
 									<td><c:out value="${hotel.location.country}" /></td>
 									<td><c:out value="${hotel.location.city}" /></td>
 									<td><c:out value="${hotel.numStars}" /></td>
-									<td><a href="${EditHotelLink}">Edit</a> |
-									<a href="${DeleteHotelLink}">Delete</a> </td>
+									<td><a href="${EditHotelLink}">Edit</a> | <a
+										href="${DeleteHotelLink}">Delete</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -167,50 +170,53 @@ to {
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="js/jquery-3.2.1.slim.min.js"></script>
-	<script>window.jQuery || document.write('<script src="js/jquery-slim.min.js"><\/script>')</script>
+	<script src="js/jquery-3.2.1.slim.min.js"></script>
+	<script>
+		window.jQuery
+				|| document
+						.write('<script src="js/jquery-slim.min.js"><\/script>')
+	</script>
 	<script src="js/popper.min.js"></script>
-	<script
-		src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 
 	<!-- Icons -->
 	<script src="js/feather.min.js"></script>
 	<script>
-      feather.replace()
-    </script>
+		feather.replace()
+	</script>
 
 	<!-- Graphs -->
 	<script src="js/Chart.min.js"></script>
 	<script>
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          datasets: [{
-            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-            lineTension: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#007bff',
-            borderWidth: 4,
-            pointBackgroundColor: '#007bff'
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: false
-              }
-            }]
-          },
-          legend: {
-            display: false,
-          }
-        }
-      });
-    </script>
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+			type : 'line',
+			data : {
+				labels : [ "Sunday", "Monday", "Tuesday", "Wednesday",
+						"Thursday", "Friday", "Saturday" ],
+				datasets : [ {
+					data : [ 15339, 21345, 18483, 24003, 23489, 24092, 12034 ],
+					lineTension : 0,
+					backgroundColor : 'transparent',
+					borderColor : '#007bff',
+					borderWidth : 4,
+					pointBackgroundColor : '#007bff'
+				} ]
+			},
+			options : {
+				scales : {
+					yAxes : [ {
+						ticks : {
+							beginAtZero : false
+						}
+					} ]
+				},
+				legend : {
+					display : false,
+				}
+			}
+		});
+	</script>
 
 
 </body>

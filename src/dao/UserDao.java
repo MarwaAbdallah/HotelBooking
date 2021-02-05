@@ -132,7 +132,7 @@ public class UserDao {
 		Connection myCon = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
-		
+		System.out.println("getEnabledUsersCount() ");
 		try {
 			myCon = datasource.getConnection();
 			String sql = "select count(*) from users where enabled=true";

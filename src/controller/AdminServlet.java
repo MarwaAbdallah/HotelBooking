@@ -149,7 +149,7 @@ public class AdminServlet extends HttpServlet {
 
 	private void getAddUser(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		String url = "/WEB-INF/views/adminadduser.jsp";
+		String url = "/WEB-INF/views/adminuseradd.jsp";
 		System.out.println("In get ADD User");
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
 		try {
