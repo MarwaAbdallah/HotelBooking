@@ -5,7 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
-<html>
+<!-- saved from url=(0053)https://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -23,7 +24,7 @@
 
 <!-- Bootstrap core CSS -->
 <link
-	href="js/bootstrap.min.css"
+	href="css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
@@ -56,9 +57,17 @@ to {
 }
 </style>
 </head>
+
 <body>
 <%@ include file="header.jsp" %>
-	<div class="container-fluid">
+
+  <div class="jumbotron">
+    <div class="container">
+
+      </div>
+  </div>
+
+		<div class="container-fluid">
 		<div class="row">
 			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
 				<div class="sidebar-sticky">
@@ -141,7 +150,6 @@ to {
 			</main>
 		</div>
 	</div>
-
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
@@ -195,3 +203,4 @@ to {
 
 </body>
 </html>
+
