@@ -21,6 +21,9 @@ The app supports Role Based Access (RBAC). The functionalities of the app is des
 
 
 ### Screenshots
+![Picture for ER diagram](WebContent/img/EntityRelationship?raw=true "ER Model")
+### ER model
+
 #### Home Page
 <img width="800" alt="portfolio_view" src="WebContent/img/home.png">
 
