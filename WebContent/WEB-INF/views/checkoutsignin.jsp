@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Reservation</title>
+<title>Hotel Booking</title>
 <link href="css/bootstrap.min.css" rel="stylesheet" >
 </head>
 <body>
@@ -111,10 +111,10 @@
 						<hr class="mb-4">
 
 						<div class="col-md-6 mb-3">
-							<form name="requestloginPageCheckout" action="LoginServlet">
+							<form name="requestloginPageCheckout" action="AuthenticationServlet">
 								<input type="hidden" id="returnCheckout" name="returnCheckout"
 									value="returnCheckout"> <input type="hidden"
-									name="fromb" value="${pageContext.request.requestURI}">
+									name="fromResource" value="${pageContext.request.requestURI}">
 								<h4 class="mb-3">Have an Account ?</h4>
 								<input type="hidden" name="action" value="REQUEST_SIGNIN">
 								<button class="btn btn-primary btn-lg " type="submit">Sign
@@ -126,7 +126,7 @@
 							<form name="requestSignupPage" action="RegisterServlet">
 								<h4 class="mb-3">Want to create an Account ?</h4>
 								<input type="hidden" name="action" value="REQUEST_SIGNUP">
-								<input type="hidden" name="fromb"
+								<input type="hidden" name="fromResource"
 									value="${pageContext.request.requestURI}"> <input
 									type="hidden" id="returnCheckout" name="returnCheckout"
 									value="returnCheckout">

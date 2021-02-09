@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
 
-    <title>Floating labels example for Bootstrap</title>
+    <title>Hotel Booking</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/floating-labels/">
 
@@ -49,7 +49,7 @@
 			</div>
 
 			<div class="mb-3">
-				<label for="address">Password</label> <input type="text"
+				<label for="password">Password</label> <input type="password"
 					class="form-control" type="password"  id="password" name="password"
 					placeholder="1234 Main St" required>
 				<div class="invalid-feedback">Please enter your shipping

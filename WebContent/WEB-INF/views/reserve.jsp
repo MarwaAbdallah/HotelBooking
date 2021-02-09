@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Reservation</title>
+<title>Hotel Booking</title>
 <link href="css/bootstrap.min.css" rel="stylesheet" >
 </head>
 <body>

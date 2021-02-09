@@ -25,10 +25,10 @@ import model.Role;
 import model.User;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class AuthenticationServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/AuthenticationServlet")
+public class AuthenticationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private UserDao UserDaoUtil;
     /**
@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 	@Resource(name="jdbc/HotelBookingDB")
 	private DataSource dataSource;	
        
-    public LoginServlet() {
+    public AuthenticationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -91,7 +91,7 @@ public class LoginServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private void signout(HttpServletRequest request, 
+	 void signout(HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Inside Logout");
 		HttpSession session = request.getSession(false);
@@ -100,7 +100,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		request.logout();
 	}
-	private void doSignOutUser(HttpServletRequest request, 
+	 void doSignOutUser(HttpServletRequest request, 
 			HttpServletResponse response)  throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	    // Delete all the cookies
@@ -121,7 +121,7 @@ public class LoginServlet extends HttpServlet {
 		dispatcher.forward(request,response);
 	}
 	
-	private void doSignInUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	 void doSignInUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String email = request.getParameter("email");
 		String pwd = request.getParameter("password");
@@ -186,11 +186,12 @@ public class LoginServlet extends HttpServlet {
 	
 	
 
-	private void getSignInPage(HttpServletRequest request, 
+	public void getSignInPage(HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String url="/WEB-INF/views/signin.jsp";
-		String from= request.getParameter("fromb");
+		String from= request.getParameter("fromResource");
+		System.out.println("Hello !");
 		if((request.getSession(false)!= null)&(request.getRemoteUser()!=null)) {
 			System.out.println("User already signed in !");
 			System.out.println("User is !"+request.getRemoteUser());
@@ -198,15 +199,15 @@ public class LoginServlet extends HttpServlet {
 			
 		} else {
 			if(from != null) {
-				request.setAttribute("from",from);
+				//request.setAttribute("from",from);
 			}
 	
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/signin.jsp");
 			requestDispatcher.forward(request, response);
 		}
 		
 	}
-	private void forwardToRoleBasedServlet(HttpServletRequest request, 
+	 void forwardToRoleBasedServlet(HttpServletRequest request, 
 			HttpServletResponse response) {
 		//User user = UserDaoUtil
 		String url = "";

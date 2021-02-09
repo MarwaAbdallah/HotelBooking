@@ -32,8 +32,8 @@
 		<servlet-class>controller.ReservationControllerServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>controller.LoginServlet</servlet-class>
+		<servlet-name>AuthenticationServlet</servlet-name>
+		<servlet-class>controller.AuthenticationServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>AdminServlet</servlet-name>
@@ -79,7 +79,7 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>LoginServlet</servlet-name>
+		<servlet-name>AuthenticationServlet</servlet-name>
 		<url-pattern>/Login</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>

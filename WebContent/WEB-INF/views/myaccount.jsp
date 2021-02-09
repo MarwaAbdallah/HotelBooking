@@ -16,7 +16,7 @@
 <link rel="icon"
 	href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
 
-<title>Dashboard Template for Bootstrap</title>
+<title>Hotel Booking</title>
 
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
@@ -79,7 +79,7 @@ to {
 								<span class="sr-only">(current)</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="${MyAccount}"><svg
+							href="#"><svg
 									xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 									viewBox="0 0 24 24" fill="none" stroke="currentColor"
 									stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

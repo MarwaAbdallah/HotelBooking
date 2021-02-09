@@ -15,7 +15,7 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Jekyll v4.1.1">
-<title>Jumbotron Template · Bootstrap</title>
+<title>Hotel Booking</title>
 
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/4.5/examples/jumbotron/">
@@ -68,10 +68,10 @@
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		<c:url var="UserHome" value="user">
 		</c:url>
-		<c:url var="SignIn" value="LoginServlet">
+		<c:url var="SignIn" value="AuthenticationServlet">
 			<c:param name="action" value="REQUEST_SIGNIN" />
 		</c:url>
-		<c:url var="SignOut" value="LoginServlet">
+		<c:url var="SignOut" value="AuthenticationServlet">
 			<c:param name="action" value="SIGNOUT" />
 		</c:url>
 		<c:url var="SignUp" value="RegisterServlet">
